@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: java-webapp
-        image: twhilst/javaweb:latest
+        image: twhilst/javaweb:1.0
         ports:
         - containerPort: 8080
