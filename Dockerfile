@@ -6,10 +6,16 @@ WORKDIR /app
 
 RUN mvn clean package
 
-FROM tomcat:11.0.6-jdk21-temurin-noble
+FROM amazoncorretto:22
+
+LABEL version="1.0"
+
+WORKDIR /app
 
 # This is the particular port where the docker container will be listening on
-EXPOSE 8080
+EXPOSE 8080:8080
 
 # THis basically copies the result of the node container and paste it in the nginx html folder
-COPY --from=build /app/target/ecommerce-1.0-SNAPSHOT.jar /usr/local/tomcat/webapps
+COPY --from=build /app/target/ecommerce-1.0-SNAPSHOT.jar /app/java-backend.jar
+
+ENTRYPOINT ["java", "-jar", "Java-backend.jar"]
