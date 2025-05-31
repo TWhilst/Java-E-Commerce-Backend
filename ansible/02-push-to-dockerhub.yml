@@ -27,7 +27,7 @@
 
       
     - name: Build Docker image
-      command: docker build -t twhilst/javaweb .
+      command: docker build -t twhilst/javaweb:1.0 .
       args:
         chdir: /home/ec2-user/java
 
@@ -35,4 +35,4 @@
       command: docker login -u {{ username }} -p {{ password }}
 
     - name: Push Docker image to registry
-      command: docker push twhilst/javaweb:latest
+      command: docker push twhilst/javaweb:1.0
