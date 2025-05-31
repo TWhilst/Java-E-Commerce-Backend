@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    tools{
+       maven 'maven'
+    }
+    
+    environment {
+        ANSIBLE_INVENTORY = '/home/ec2-user/jenkins/workspace/build-java-backend/ansible/hosts.ini'
+        ANSIBLE_PLAYBOOK = '/home/ec2-user/jenkins/workspace/build-java-backend/ansible/01-deploy-app.yml'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main',
+                credentialsId: 'github',
+                url: 'https://github.com/TWhilst/Java-E-Commerce-Backend.git'
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Build & Package') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage ('Run Sonarqube on Docker') {
+            steps{
+                sh 'docker container start sonarqube-t'
+            }
+        }
+
+        stage ('Sonarqube integration') {
+            steps {
+                script{
+                   withSonarQubeEnv(installationName: 'sonarqube', credentialsId: 'sonarqube-jenkins') {
+                        sh 'mvn sonar:sonar'
+                   }
+                }
+            }
+        }
+        
+         stage('Deploy to Server') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASSWORD_VAR', usernameVariable: 'USERNAME')]) {
+                       ansiblePlaybook(
+                            playbook: ANSIBLE_PLAYBOOK,
+                            inventory: ANSIBLE_INVENTORY,
+                            extraVars: [
+                                username: USERNAME,
+                                password: PASSWORD_VAR,
+                            ]
+                        )
+                    }
+                }
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build and Run Sonarqube Docker Image') {
+            steps {
+                sh 'docker build -t sonarqube-t .'
+            }
+        }
+    }
+}

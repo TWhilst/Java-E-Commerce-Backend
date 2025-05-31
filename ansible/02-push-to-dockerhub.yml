@@ -1,0 +1,38 @@
+---
+- name: Setup Docker
+  hosts: k8s_master
+  become: true
+  vars:
+    username: "{{ username }}"
+    password: "{{ password }}"
+  tasks:
+    - debug: 
+        msg: "Username: {{ username }}, Password: {{ password }}"
+    - name: Install packages
+      yum:
+        name: git, docker
+        state: present
+
+    - name: Start docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Clone repository
+      git:
+        repo: https://github.com/TWhilst/Java-E-Commerce-Backend.git
+        version: main
+        dest: /home/ec2-user/java
+
+      
+    - name: Build Docker image
+      command: docker build -t twhilst/javaweb .
+      args:
+        chdir: /home/ec2-user/java
+
+    - name: Docker login
+      command: docker login -u {{ username }} -p {{ password }}
+
+    - name: Push Docker image to registry
+      command: docker push twhilst/javaweb:latest
