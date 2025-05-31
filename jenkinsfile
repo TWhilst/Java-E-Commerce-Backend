@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build and Run Sonarqube Docker Image') {
             steps {
-                sh 'docker build -t sonarqube-t .'
+                sh 'docker run -dt --name sonarqube-t -p 9000:9000 sonarqube:latest'
             }
         }
     }
