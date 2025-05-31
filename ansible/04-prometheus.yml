@@ -1,0 +1,76 @@
+# ---
+# - name: prometheus
+#   hosts: prometheus
+#   become: true
+#   tasks: 
+#     - name: Ensure prometheus is installed
+#       command: prometheus --version
+#       register: prometheus_version
+#     - debug:
+#         msg: "Prometheus version: {{ prometheus_version.stdout }}"
+    
+#     - name: Move prometheus.yml to /etc/prometheus
+#       shell: sudo mv prometheus.yml /etc/prometheus/prometheus.yml
+#       args:
+#         chdir: /home/ubuntu/prometheus*/
+      
+#     - name: move consoles and console_libraries to /etc/prometheus directory
+#       shell: |
+#         sudo mv consoles/ console_libraries/ /etc/prometheus/
+#         cd $HOME
+#       args:
+#         chdir: /home/ubuntu/prometheus*/
+    
+#     - name: Configure prometheus service
+#       shell: |
+#         sudo tee /etc/systemd/system/prometheus.service <<EOF
+#         [Unit]
+#         Description=Prometheus
+#         Documentation=https://prometheus.io/docs/introduction/overview/
+#         Wants=network-online.target
+#         After=network-online.target
+
+#         [Service]
+#         Type=simple
+#         User=prometheus
+#         Group=prometheus
+#         ExecReload=/bin/kill -HUP \$MAINPID
+#         ExecStart=/usr/local/bin/prometheus \
+#           --config.file=/etc/prometheus/prometheus.yml \
+#           --storage.tsdb.path=/var/lib/prometheus \
+#           --web.console.templates=/etc/prometheus/consoles \
+#           --web.console.libraries=/etc/prometheus/console_libraries \
+#           --web.listen-address=0.0.0.0:9090 \
+#           --web.external-url=
+
+#         SyslogIdentifier=prometheus
+#         Restart=always
+
+#         [Install]
+#         WantedBy=multi-user.target
+#         EOF
+#       args:
+#         chdir: /home/ubuntu/prometheus*/
+
+#     - name: Change the ownership of these directories to Prometheus user and group
+#       shell: |
+#         for i in rules rules.d files_sd; do sudo chown -R prometheus:prometheus /etc/prometheus/${i}; done
+#         for i in rules rules.d files_sd; do sudo chmod -R 775 /etc/prometheus/${i}; done
+#         sudo chown -R prometheus:prometheus /var/lib/prometheus/
+      
+#     - name: Reload systemd to recognize the new Prometheus service
+#       command: systemctl daemon-reload
+
+#     - name: Start and enable the Prometheus service
+#       service:
+#         name: prometheus
+#         state: started
+#         enabled: true
+
+#     - name: Check the status of the Prometheus service
+#       command: systemctl status prometheus
+#       register: prometheus_status
+#     - debug:
+#         msg: "Prometheus service status: {{ prometheus_status.stdout }}"
+        
+        

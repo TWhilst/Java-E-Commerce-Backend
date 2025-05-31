@@ -1,4 +1,4 @@
-resource "aws_eks_node_group" "ed   " {
+resource "aws_eks_node_group" "eks_node_group" {
   cluster_name    = aws_eks_cluster.eks.name
   node_group_name = "eks-node-group"
   node_role_arn   = aws_iam_role.worker.arn
@@ -8,7 +8,7 @@ resource "aws_eks_node_group" "ed   " {
   instance_types = ["t2.small"]
 
   remote_access {
-    ec2_ssh_key = "toche-key1"
+    ec2_ssh_key = aws_key_pair.Project1_key.key_name
     source_security_group_ids = [aws_security_group.Project1_sg_ssh.id]
   }
 
@@ -38,7 +38,7 @@ resource "aws_eks_node_group" "ed   " {
 resource "aws_instance" "k8s_server" {
   ami           = data.aws_ami.server_ami.id
   instance_type = "t2.micro"
-  key_name      = "toche-key1"
+  key_name      = aws_key_pair.Project1_key.key_name
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.Project1_sg_ssh.id]
   subnet_id              = aws_subnet.Project1_public.id
