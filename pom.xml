@@ -23,7 +23,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.cyat.ecommerce.Main</mainClass>
-                            </manifest>
+                        </manifest>
                     </archive>
                 </configuration>
             </plugin>
