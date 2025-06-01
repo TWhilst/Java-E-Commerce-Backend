@@ -10,12 +10,12 @@ FROM amazoncorretto:22
 
 LABEL version="1.0"
 
-WORKDIR /app
-
 # This is the particular port where the docker container will be listening on
 EXPOSE 8080:8080
 
-# THis basically copies the result of the node container and paste it in the nginx html folder
-COPY --from=build /app/target/ecommerce-1.0-SNAPSHOT.jar /app/java-backend.jar
+WORKDIR /app
 
-ENTRYPOINT ["java", "-jar", "Java-backend.jar"]
+# THis basically copies the result of the node container and paste it in the nginx html folder
+COPY target/ecommerce-1.0-SNAPSHOT.jar /app/java-backend.jar
+
+ENTRYPOINT ["java", "-jar", "java-backend.jar"]
