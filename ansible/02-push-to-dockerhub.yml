@@ -31,9 +31,9 @@
         dest: /home/ec2-user/java
       
     - name: Build Docker image
-      command: docker build -t twhilst/javaweb:1.2 .
-      args:
-        chdir: /home/ec2-user/java
+      shell: | 
+        cd /home/ec2-user/java
+        docker build -t twhilst/javaweb:1.2 .
 
     - name: Docker login
       command: docker login -u {{ username }} -p {{ password }}
