@@ -22,8 +22,8 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.cyat.ecommerce.MainApplication</mainClass>
-                        </manifest>
+                            <mainClass>com.cyat.ecommerce.Main</mainClass>
+                            </manifest>
                     </archive>
                 </configuration>
             </plugin>
