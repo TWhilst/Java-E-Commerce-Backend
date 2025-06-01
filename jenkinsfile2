@@ -8,7 +8,7 @@ pipeline {
     environment {
         ANSIBLE_INVENTORY = '/home/ec2-user/jenkins/workspace/build-java-backend/ansible/hosts.ini'
         ANSIBLE_PLAYBOOK = '/home/ec2-user/jenkins/workspace/build-java-backend/ansible/02-push-to-dockerhub.yml'
-        target = '/home/ec2-user/jenkins/workspace/build-java-backend/target'
+        target = '/home/ec2-user/jenkins/workspace/build-java-backend/target/'
     }
 
     stages {
