@@ -33,10 +33,10 @@
     - name: Build Docker image
       shell: | 
         cd /home/ec2-user/java
-        docker build -t twhilst/javaweb:1.2 .
+        docker build -t twhilst/javaweb:1.5 .
 
     - name: Docker login
       command: docker login -u {{ username }} -p {{ password }}
 
     - name: Push Docker image to registry
-      command: docker push twhilst/javaweb:1.2
+      command: docker push twhilst/javaweb:1.5
