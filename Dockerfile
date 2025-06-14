@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk as build
+FROM 3.9.9-eclipse-temurin-24-alpine as build
 
 COPY . /app
 
@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN mvn clean package
 
-FROM  eclipse-temurin:17-jdk
+FROM amazoncorretto:22
 
 LABEL version="1.0"
 
