@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN mvn clean package
 
-FROM amazoncorretto:22
+FROM eclipse-temurin:17-jdk
 
 LABEL version="1.0"
 
