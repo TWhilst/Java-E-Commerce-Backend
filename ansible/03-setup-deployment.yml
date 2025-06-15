@@ -24,7 +24,7 @@
         dest: /home/ec2-user/
 
     - name: Create a replicaset on Kubernetes
-      command: kubectl apply -f webapp-deploy.yml
+      command: kubectl apply -f 01-deploy-javaweb.yml
       args:
         chdir: /home/ec2-user/controllers
 
@@ -35,7 +35,7 @@
         msg: "Replicaset status: {{ replicaset_status.stdout }}"
 
     - name: Create a LoadBalancer for the replicaset
-      command: kubectl create -f load-balancer-service.yml
+      command: kubectl create -f 02-load-balancers-service.yml
       args:
         chdir: /home/ec2-user/controllers
 

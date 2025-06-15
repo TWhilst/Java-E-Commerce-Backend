@@ -3,16 +3,16 @@ pipeline {
     
     environment {
         ANSIBLE_INVENTORY = '/home/ec2-user/jenkins/workspace/highly-available-webapp/ansible/hosts.ini'
-        ANSIBLE_PLAYBOOK = '/home/ec2-user/jenkins/workspace/highly-available-webapp/ansible/01-setup-deployment.yml'
+        ANSIBLE_PLAYBOOK = '/home/ec2-user/jenkins/workspace/highly-available-webapp/ansible/03-setup-deployment.yml'
         controllers = '/home/ec2-user/jenkins/workspace/highly-available-webapp/controllers'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'project-3',
+                git branch: 'main',
                 credentialsId: 'github',
-                url: 'https://github.com/TWhilst/proj-mdp-152-155.git'
+                url: 'https://github.com/TWhilst/Java-E-Commerce-Backend.git'
             }
         }
         
