@@ -33,7 +33,7 @@
     - name: Build Docker image
       shell: | 
         cd /home/ec2-user/java
-        docker build -t twhilst/javaweb:1.6 .
+        docker build -t twhilst/javaweb:2.0 .
 
     - name: Docker login
       command: docker login -u {{ username }} -p {{ password }}
